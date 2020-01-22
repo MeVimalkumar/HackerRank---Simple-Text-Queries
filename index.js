@@ -1,29 +1,28 @@
 function textQueries(sentences, queries) {
     // Write your code here
-    let arr = [];
-    let queryIndex = 0;
-    for (let query of queries) {
-        arr[queryIndex] = [];
-        const q = query.split(" ");
-        let sentenceIndex = 0;
-        for (let sentence of sentences) {
-            const s = sentence.split(" ");
-            if (containsAll(s, q)) {
-                arr[queryIndex].push(sentenceIndex)
+    for (let queryIndex = 0, queryLen = queries.length; queryIndex < queryLen; queryIndex++) {
+        let output = [];
+        const query = queries[queryIndex].split(" ");
+        if (query.length > 10 || !query.length) {
+            continue;
+        }
+        for (let sentenceIndex = 0, sentenceLen = sentences.length; sentenceIndex < sentenceLen; sentenceIndex++) {
+            const sentence = sentences[sentenceIndex].split(" ");
+            if (sentence.length <= 10 && sentence.length>0 && containsAll(sentence, query)) {
+                output.push(sentenceIndex);
             }
-            sentenceIndex += 1;
         }
-        if (!arr[queryIndex].length) {
-            arr[queryIndex].push(-1);
+        if (!output.length) {
+            output = [-1];
         }
-        console.log(arr[queryIndex].join(" "));
-        queryIndex += 1;
+        console.log(output.join(" "));
     }
 }
 
-function containsAll(s, q) {
-    for (let item of q) {
-        if (!s.includes(item)) {
+function containsAll(sentence, query) {
+    let queryLen = query.length;
+    while (queryLen--) {
+        if (!sentence.includes(query[queryLen])) {
             return false;
         }
     }
