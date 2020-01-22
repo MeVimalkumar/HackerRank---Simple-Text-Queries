@@ -1,0 +1,1 @@
+# HackerRank---Simple-Text-Queries
